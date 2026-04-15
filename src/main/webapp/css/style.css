@@ -1,0 +1,402 @@
+/* =============================================
+   CARDER PUZZLE - Stylesheet
+   Racing-game aesthetic: dark, sharp, energetic
+   ============================================= */
+
+:root {
+    --bg: #0d0d0f;
+    --surface: #16181c;
+    --surface2: #1e2128;
+    --border: #2a2d35;
+    --accent: #e8001d;
+    --accent2: #f5a800;
+    --text: #f0f0f4;
+    --text-muted: #7a7d8a;
+    --success: #00e676;
+    --error: #ff1744;
+    --card-w: 220px;
+    --radius: 12px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-columns: 1fr 280px;
+    grid-template-areas:
+        "header  header"
+        "controls controls"
+        "banner  banner"
+        "main    sidebar";
+    gap: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background grid texture */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(232,0,29,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232,0,29,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ===== HEADER ===== */
+.site-header {
+    grid-area: header;
+    background: linear-gradient(135deg, #0a0a0c 0%, #1a0005 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+}
+
+.logo { display: flex; align-items: baseline; gap: 6px; }
+.logo-icon { font-size: 2rem; }
+.logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    line-height: 1;
+}
+.logo-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 4px;
+}
+
+.stats-bar { display: flex; gap: 2rem; align-items: center; }
+.stat { display: flex; flex-direction: column; align-items: center; }
+.stat-label { font-size: 0.65rem; letter-spacing: 2px; color: var(--text-muted); }
+.stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--accent2);
+    line-height: 1;
+}
+.mode-val { text-transform: uppercase; color: var(--accent); }
+
+/* ===== CONTROLS ===== */
+.controls-section {
+    grid-area: controls;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    position: relative;
+    z-index: 9;
+}
+
+.controls-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.task-desc {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.task-desc strong { color: var(--accent2); }
+.task-icon { font-size: 1.2rem; }
+
+.btn-group { display: flex; gap: 10px; }
+
+.btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+}
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.15s;
+}
+.btn:hover::after { background: rgba(255,255,255,0.12); }
+.btn:active { transform: scale(0.96); }
+
+.btn-speed { background: linear-gradient(135deg, #1a0005, #e8001d); color: #fff; border: 1px solid var(--accent); }
+.btn-price { background: linear-gradient(135deg, #1a1200, #f5a800); color: #000; }
+.btn-name  { background: linear-gradient(135deg, #001a1a, #00bcd4); color: #fff; }
+.btn-check {
+    background: linear-gradient(135deg, var(--accent), #ff6b35);
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 12px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(232,0,29,0.4);
+}
+.btn-check:hover { box-shadow: 0 0 32px rgba(232,0,29,0.7); }
+
+/* ===== RESULT BANNER ===== */
+.result-banner {
+    grid-area: banner;
+    padding: 14px 2rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    position: relative;
+    z-index: 8;
+    animation: slideDown 0.4s ease;
+}
+.banner-correct {
+    background: linear-gradient(90deg, #003300, #00e676, #003300);
+    color: #fff;
+}
+.banner-wrong {
+    background: linear-gradient(90deg, #330000, #ff1744, #330000);
+    color: #fff;
+}
+.btn-celebrate {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+}
+
+/* ===== MAIN GAME AREA ===== */
+.game-area {
+    grid-area: main;
+    padding: 2rem;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.car-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ===== CAR CARDS ===== */
+.car-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: grab;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    user-select: none;
+    overflow: hidden;
+}
+
+.car-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--accent);
+    border-radius: var(--radius) 0 0 var(--radius);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.car-card:hover {
+    transform: translateX(6px);
+    box-shadow: var(--shadow), -4px 0 0 var(--accent);
+    border-color: var(--accent);
+}
+.car-card:hover::before { opacity: 1; }
+
+.car-card.dragging {
+    opacity: 0.4;
+    transform: scale(0.97);
+    border: 2px dashed var(--accent);
+}
+.car-card.drag-over {
+    border: 2px solid var(--accent2);
+    box-shadow: 0 0 24px rgba(245,168,0,0.4);
+    transform: scale(1.02);
+}
+
+.card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--text-muted);
+    min-width: 36px;
+    text-align: center;
+    line-height: 1;
+    transition: color 0.2s;
+}
+.car-card:hover .card-num { color: var(--accent); }
+
+.car-svg-wrap {
+    width: 140px;
+    flex-shrink: 0;
+}
+.car-svg { width: 100%; height: auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6)); }
+
+.car-info { flex: 1; }
+.car-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+.car-specs { display: flex; gap: 16px; flex-wrap: wrap; }
+.spec {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+}
+.spec-speed { color: var(--accent2); }
+.spec-price { color: #64b5f6; }
+
+.drag-handle {
+    color: var(--text-muted);
+    font-size: 1.3rem;
+    cursor: grab;
+    padding: 0 4px;
+    letter-spacing: -2px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+.car-card:hover .drag-handle { opacity: 1; color: var(--accent); }
+
+/* ===== SUBMIT ROW ===== */
+.submit-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    padding-bottom: 2rem;
+}
+
+/* ===== LEADERBOARD ===== */
+.leaderboard {
+    grid-area: sidebar;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    padding: 1.5rem;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.lb-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--accent2);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+}
+
+.lb-entry {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    animation: fadeIn 0.3s ease;
+}
+.lb-rank {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    color: var(--text-muted);
+    width: 28px;
+}
+.lb-entry:nth-child(1) .lb-rank { color: gold; }
+.lb-entry:nth-child(2) .lb-rank { color: silver; }
+.lb-entry:nth-child(3) .lb-rank { color: #cd7f32; }
+.lb-name { font-weight: 700; font-size: 0.95rem; flex: 1; }
+.lb-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    color: var(--accent2);
+}
+.lb-meta { font-size: 0.7rem; color: var(--text-muted); }
+.lb-loading { color: var(--text-muted); font-style: italic; font-size: 0.9rem; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== FIREWORKS CANVAS ===== */
+#fireworksCanvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "controls"
+            "banner"
+            "main"
+            "sidebar";
+    }
+    .leaderboard { border-left: none; border-top: 1px solid var(--border); }
+    .car-svg-wrap { width: 100px; }
+    .car-card { gap: 10px; padding: 12px; }
+}
